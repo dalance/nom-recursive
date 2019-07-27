@@ -10,9 +10,9 @@
 //! use nom::character::complete::*;
 //! use nom::IResult;
 //! use nom_locate::LocatedSpanEx;
-//! use nom_recursive::{recursive_parser, RecursiveInfo, RecursiveTracer};
+//! use nom_recursive::{recursive_parser, RecursiveInfo};
 //!
-//! // Input type must implement trait RecursiveTracer
+//! // Input type must implement trait HasRecursiveInfo
 //! // nom_locate::LocatedSpanEx<T, RecursiveInfo> implements it.
 //! type Span<'a> = LocatedSpanEx<&'a str, RecursiveInfo>;
 //!
@@ -85,10 +85,16 @@ thread_local!(
 );
 
 /// The type of payload used by recursive tracer
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub struct RecursiveInfo {
     flag: [u64; RECURSIVE_FLAG_WORDS],
     ptr: *const u8,
+}
+
+impl Default for RecursiveInfo {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl RecursiveInfo {
@@ -133,18 +139,31 @@ impl RecursiveInfo {
 /// Trait for recursive tracer
 ///
 /// The input type of nom parser must implement this.
-pub trait RecursiveTracer {
-    fn get_info(&self) -> RecursiveInfo;
-    fn set_info(self, info: RecursiveInfo) -> Self;
+pub trait HasRecursiveInfo {
+    fn get_recursive_info(&self) -> RecursiveInfo;
+    fn set_recursive_info(self, info: RecursiveInfo) -> Self;
 }
 
-impl<T> RecursiveTracer for LocatedSpanEx<T, RecursiveInfo> {
-    fn get_info(&self) -> RecursiveInfo {
-        self.extra.clone()
+impl HasRecursiveInfo for RecursiveInfo {
+    fn get_recursive_info(&self) -> RecursiveInfo {
+        *self
     }
 
-    fn set_info(mut self, info: RecursiveInfo) -> Self {
-        self.extra = info;
+    fn set_recursive_info(self, info: RecursiveInfo) -> Self {
+        info
+    }
+}
+
+impl<T, U> HasRecursiveInfo for LocatedSpanEx<T, U>
+where
+    U: HasRecursiveInfo,
+{
+    fn get_recursive_info(&self) -> RecursiveInfo {
+        self.extra.get_recursive_info()
+    }
+
+    fn set_recursive_info(mut self, info: RecursiveInfo) -> Self {
+        self.extra = self.extra.set_recursive_info(info);
         self
     }
 }

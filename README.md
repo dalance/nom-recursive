@@ -10,12 +10,12 @@ An extension of [nom](https://github.com/Geal/nom) to handle left recursion.
 nom must be 5.0.0 or later.
 nom-recursive can be applied to function-style parser only.
 
-The input type of nom parser must implement `RecursiveTracer` trait.
+The input type of nom parser must implement `HasRecursiveInfo` trait.
 Therefore `&str` and `&[u8]` can't be used.
-You can define a wrapper type of `&str` or `&[u8]` and implement `RecursiveTracer`.
+You can define a wrapper type of `&str` or `&[u8]` and implement `HasRecursiveInfo`.
 
 Alternatively you can use `nom_locate::LocatedSpanEx<T, RecursiveInfo>`.
-This implements `RecursiveTracer` in this crate.
+This implements `HasRecursiveInfo` in this crate.
 
 ## Usage
 
@@ -31,9 +31,9 @@ use nom::branch::*;
 use nom::character::complete::*;
 use nom::IResult;
 use nom_locate::LocatedSpanEx;
-use nom_recursive::{recursive_parser, RecursiveInfo, RecursiveTracer};
+use nom_recursive::{recursive_parser, RecursiveInfo};
 
-// Input type must implement trait RecursiveTracer
+// Input type must implement trait HasRecursiveInfo
 // nom_locate::LocatedSpanEx<T, RecursiveInfo> implements it.
 type Span<'a> = LocatedSpanEx<&'a str, RecursiveInfo>;
 

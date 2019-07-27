@@ -2,7 +2,7 @@ use nom::branch::*;
 use nom::character::complete::*;
 use nom::IResult;
 use nom_locate::LocatedSpanEx;
-use nom_recursive::{recursive_parser, RecursiveInfo, RecursiveTracer};
+use nom_recursive::{recursive_parser, RecursiveInfo};
 
 type Span<'a> = LocatedSpanEx<&'a str, RecursiveInfo>;
 

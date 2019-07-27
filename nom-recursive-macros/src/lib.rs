@@ -3,7 +3,7 @@
 extern crate proc_macro;
 
 use crate::proc_macro::TokenStream;
-use quote::{quote, ToTokens};
+use quote::ToTokens;
 use syn::{self, parse_macro_input, parse_quote, AttributeArgs, FnArg, ItemFn, Stmt};
 
 /// Custom attribute for recursive parser
@@ -44,7 +44,8 @@ fn impl_recursive_parser_bofore(item: &ItemFn) -> Stmt {
             let id = nom_recursive::RECURSIVE_STORAGE.with(|storage| {
                 storage.borrow_mut().get(stringify!(#ident))
             });
-            let mut info = #input.get_info();
+            use nom_recursive::HasRecursiveInfo;
+            let mut info = #input.get_recursive_info();
 
             use nom::AsBytes;
             let ptr = #input.as_bytes().as_ptr();
@@ -59,7 +60,7 @@ fn impl_recursive_parser_bofore(item: &ItemFn) -> Stmt {
             }
             info.set_flag(id);
 
-            #input.set_info(info)
+            #input.set_recursive_info(info)
         };
     }
 }
