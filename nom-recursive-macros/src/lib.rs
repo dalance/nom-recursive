@@ -51,13 +51,28 @@ fn impl_recursive_parser_bofore(item: &ItemFn) -> Stmt {
             let ptr = #input.as_bytes().as_ptr();
 
             if ptr != info.get_ptr() {
+                #[cfg(feature = "trace")]
+                {
+                    use nom_tracable::Tracable;
+                    nom_tracable::custom_trace(&#input, stringify!(#ident), "recursion flag clear", "\u{001b}[1;36m")
+                };
                 info.clear_flags();
                 info.set_ptr(ptr);
             }
 
             if info.check_flag(id) {
+                #[cfg(feature = "trace")]
+                {
+                    use nom_tracable::Tracable;
+                    nom_tracable::custom_trace(&#input, stringify!(#ident), "recursion detected", "\u{001b}[1;36m")
+                };
                 return Err(nom::Err::Error(nom::error::make_error(s, nom::error::ErrorKind::Fix)));
             }
+            #[cfg(feature = "trace")]
+            {
+                use nom_tracable::Tracable;
+                nom_tracable::custom_trace(&#input, stringify!(#ident), "recursion flag set", "\u{001b}[1;36m")
+            };
             info.set_flag(id);
 
             #input.set_recursive_info(info)
