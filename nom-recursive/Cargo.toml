@@ -10,20 +10,19 @@ readme = "../README.md"
 description = "An extension of nom to handle left recursion"
 edition = "2018"
 
-[package.metadata.release]
-disable-tag = true
-pre-release-replacements = [
-    {file = "../README.md", search = "nom-recursive = \"[a-z0-9\\.-]+\"", replace = "nom-recursive = \"{{version}}\""},
-]
+[features]
+default   = []
+tracer128 = []
+tracer256 = []
 
 [dependencies]
-nom_locate           = {path = "../../nom_locate", version = "0.4.0"}
+nom_locate           = {git = "https://github.com/fflorent/nom_locate", version = "0.4.0"}
 nom-recursive-macros = {path = "../nom-recursive-macros", version = "0.1.0"}
 
 [dev-dependencies]
 nom = "5.0.0"
 
-[features]
-default   = []
-tracer128 = []
-tracer256 = []
+[package.metadata.release]
+pre-release-replacements = [
+    {file = "../README.md", search = "nom-recursive = \"[a-z0-9\\.-]+\"", replace = "nom-recursive = \"{{version}}\""},
+]
