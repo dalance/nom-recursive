@@ -1,7 +1,7 @@
 # nom-recursive
 An extension of [nom](https://github.com/Geal/nom) to handle left recursion.
 
-[![Build Status](https://dev.azure.com/dalance/procs/_apis/build/status/dalance.nom-recursive?branchName=master)](https://dev.azure.com/dalance/nom-recursive/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/dalance/nom-recursive/_apis/build/status/dalance.nom-recursive?branchName=master)](https://dev.azure.com/dalance/nom-recursive/_build/latest?definitionId=1&branchName=master)
 [![Crates.io](https://img.shields.io/crates/v/nom-recursive.svg)](https://crates.io/crates/nom-recursive)
 [![Docs.rs](https://docs.rs/nom-recursive/badge.svg)](https://docs.rs/nom-recursive)
 
