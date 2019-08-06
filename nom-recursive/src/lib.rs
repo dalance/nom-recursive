@@ -100,7 +100,7 @@ impl Default for RecursiveInfo {
 impl RecursiveInfo {
     pub fn new() -> Self {
         RecursiveInfo {
-            flag: [0],
+            flag: [0; RECURSIVE_FLAG_WORDS],
             ptr: std::ptr::null(),
         }
     }
