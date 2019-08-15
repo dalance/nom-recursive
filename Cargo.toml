@@ -3,6 +3,3 @@ members = [
     "nom-recursive",
     "nom-recursive-macros",
 ]
-
-[patch.crates-io]
-nom_locate = {git = "https://github.com/fflorent/nom_locate"}

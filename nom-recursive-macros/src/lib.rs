@@ -28,11 +28,11 @@ fn impl_recursive_parser(_attr: &AttributeArgs, item: &ItemFn) -> TokenStream {
 }
 
 fn impl_recursive_parser_bofore(item: &ItemFn) -> Stmt {
-    let ident = &item.ident;
+    let ident = &item.sig.ident;
 
-    let input = if let Some(x) = &item.decl.inputs.first() {
-        match x.value() {
-            FnArg::Captured(arg) => &arg.pat,
+    let input = if let Some(x) = &item.sig.inputs.first() {
+        match x {
+            FnArg::Typed(arg) => &arg.pat,
             _ => panic!("function with #[recursive_parser] must have an argument"),
         }
     } else {

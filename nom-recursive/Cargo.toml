@@ -7,7 +7,7 @@ keywords = ["parser", "nom"]
 categories = ["parsing"]
 license = "MIT OR Apache-2.0"
 readme = "../README.md"
-description = "An extension of nom to handle left recursion"
+description = "Extension of nom to handle left recursion"
 edition = "2018"
 
 [features]
@@ -16,7 +16,7 @@ tracer128 = []
 tracer256 = []
 
 [dependencies]
-nom_locate           = "0.4.0"
+nom_locate           = "1.0.0"
 nom-recursive-macros = {path = "../nom-recursive-macros", version = "0.1.0"}
 
 [dev-dependencies]
