@@ -21,7 +21,8 @@ tracer128 = []
 tracer256 = []
 
 [dependencies]
-nom_locate           = "1.0.0"
+nom_locate           = "2"
+nom_locate1          = {version = "1", package = "nom_locate"}
 nom-recursive-macros = {path = "../nom-recursive-macros", version = "0.1.0"}
 
 [dev-dependencies]

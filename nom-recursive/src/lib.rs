@@ -9,12 +9,12 @@
 //! use nom::branch::*;
 //! use nom::character::complete::*;
 //! use nom::IResult;
-//! use nom_locate::LocatedSpanEx;
+//! use nom_locate::LocatedSpan;
 //! use nom_recursive::{recursive_parser, RecursiveInfo};
 //!
 //! // Input type must implement trait HasRecursiveInfo
-//! // nom_locate::LocatedSpanEx<T, RecursiveInfo> implements it.
-//! type Span<'a> = LocatedSpanEx<&'a str, RecursiveInfo>;
+//! // nom_locate::LocatedSpan<T, RecursiveInfo> implements it.
+//! type Span<'a> = LocatedSpan<&'a str, RecursiveInfo>;
 //!
 //! pub fn expr(s: Span) -> IResult<Span, String> {
 //!     alt((expr_binary, term))(s)
@@ -36,12 +36,11 @@
 //! }
 //!
 //! fn main() {
-//!     let ret = expr(LocatedSpanEx::new_extra("1+1", RecursiveInfo::new()));
+//!     let ret = expr(LocatedSpan::new_extra("1+1", RecursiveInfo::new()));
 //!     println!("{:?}", ret.unwrap().1);
 //! }
 //! ```
 
-use nom_locate::LocatedSpanEx;
 pub use nom_recursive_macros::recursive_parser;
 use std::collections::HashMap;
 
@@ -154,7 +153,21 @@ impl HasRecursiveInfo for RecursiveInfo {
     }
 }
 
-impl<T, U> HasRecursiveInfo for LocatedSpanEx<T, U>
+impl<T, U> HasRecursiveInfo for nom_locate1::LocatedSpanEx<T, U>
+where
+    U: HasRecursiveInfo,
+{
+    fn get_recursive_info(&self) -> RecursiveInfo {
+        self.extra.get_recursive_info()
+    }
+
+    fn set_recursive_info(mut self, info: RecursiveInfo) -> Self {
+        self.extra = self.extra.set_recursive_info(info);
+        self
+    }
+}
+
+impl<T, U> HasRecursiveInfo for nom_locate::LocatedSpan<T, U>
 where
     U: HasRecursiveInfo,
 {

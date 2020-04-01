@@ -14,7 +14,7 @@ The input type of nom parser must implement `HasRecursiveInfo` trait.
 Therefore `&str` and `&[u8]` can't be used.
 You can define a wrapper type of `&str` or `&[u8]` and implement `HasRecursiveInfo`.
 
-Alternatively you can use `nom_locate::LocatedSpanEx<T, RecursiveInfo>`.
+Alternatively you can use `nom_locate::LocatedSpan<T, RecursiveInfo>`.
 This implements `HasRecursiveInfo` in this crate.
 
 ## Usage
@@ -30,12 +30,12 @@ nom-recursive = "0.1.1"
 use nom::branch::*;
 use nom::character::complete::*;
 use nom::IResult;
-use nom_locate::LocatedSpanEx;
+use nom_locate::LocatedSpan;
 use nom_recursive::{recursive_parser, RecursiveInfo};
 
 // Input type must implement trait HasRecursiveInfo
-// nom_locate::LocatedSpanEx<T, RecursiveInfo> implements it.
-type Span<'a> = LocatedSpanEx<&'a str, RecursiveInfo>;
+// nom_locate::LocatedSpan<T, RecursiveInfo> implements it.
+type Span<'a> = LocatedSpan<&'a str, RecursiveInfo>;
 
 pub fn expr(s: Span) -> IResult<Span, String> {
     alt((expr_binary, term))(s)
@@ -57,7 +57,7 @@ pub fn term(s: Span) -> IResult<Span, String> {
 }
 
 fn main() {
-    let ret = expr(LocatedSpanEx::new_extra("1+1", RecursiveInfo::new()));
+    let ret = expr(LocatedSpan::new_extra("1+1", RecursiveInfo::new()));
     println!("{:?}", ret.unwrap().1);
 }
 ```
