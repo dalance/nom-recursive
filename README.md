@@ -21,7 +21,7 @@ This implements `HasRecursiveInfo` in this crate.
 
 ```Cargo.toml
 [dependencies]
-nom-recursive = "0.2.0"
+nom-recursive = "0.3.0"
 ```
 
 ## Example
