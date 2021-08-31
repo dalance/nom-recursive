@@ -69,7 +69,7 @@ impl RecursiveIndexes {
             *x
         } else {
             let new_index = self.next;
-            assert!(new_index < RECURSIVE_FLAG_WORDS * 64, format!("Recursive tracers exceed the maximum number({}). Consider use feature `tracer128` or `tracer256` to extend it.", RECURSIVE_FLAG_WORDS * 64));
+            assert!(new_index < RECURSIVE_FLAG_WORDS * 64, "Recursive tracers exceed the maximum number({}). Consider use feature `tracer128` or `tracer256` to extend it.", RECURSIVE_FLAG_WORDS * 64);
             self.next += 1;
             self.indexes.insert(key, new_index);
             new_index
