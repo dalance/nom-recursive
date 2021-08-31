@@ -1,6 +1,6 @@
 [package]
 name = "nom-recursive"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["dalance <dalance@gmail.com>"]
 repository = "https://github.com/dalance/nom-recursive"
 keywords = ["parser", "nom"]
