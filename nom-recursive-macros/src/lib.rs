@@ -66,7 +66,7 @@ fn impl_recursive_parser_bofore(item: &ItemFn) -> Stmt {
                     use nom_tracable::Tracable;
                     nom_tracable::custom_trace(&#input, stringify!(#ident), "recursion detected", "\u{001b}[1;36m")
                 };
-                return Err(nom::Err::Error(nom::error::make_error(s, nom::error::ErrorKind::Fix)));
+                return Err(nom::Err::Error(nom::error::make_error(#input, nom::error::ErrorKind::Fix)));
             }
             #[cfg(feature = "trace")]
             {
