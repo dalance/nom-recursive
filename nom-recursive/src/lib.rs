@@ -153,20 +153,6 @@ impl HasRecursiveInfo for RecursiveInfo {
     }
 }
 
-impl<T, U> HasRecursiveInfo for nom_locate1::LocatedSpanEx<T, U>
-where
-    U: HasRecursiveInfo,
-{
-    fn get_recursive_info(&self) -> RecursiveInfo {
-        self.extra.get_recursive_info()
-    }
-
-    fn set_recursive_info(mut self, info: RecursiveInfo) -> Self {
-        self.extra = self.extra.set_recursive_info(info);
-        self
-    }
-}
-
 impl<T, U> HasRecursiveInfo for nom_locate::LocatedSpan<T, U>
 where
     U: HasRecursiveInfo,
