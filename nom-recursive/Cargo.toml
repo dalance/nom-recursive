@@ -25,4 +25,4 @@ nom_locate           = "4"
 nom-recursive-macros = {path = "../nom-recursive-macros", version = "^0.5.1" }
 
 [dev-dependencies]
-nom = "7"
+nom = "8"
